@@ -6,6 +6,21 @@
       "dom.iterable",
       "esnext"
     ],
+    "paths":{
+      "src":["src"],
+      "@style":["src/style"],
+      "@service":["src/service"],
+      "@service/*":["src/service/*"],
+      "@views/*":["src/views/*"],
+      "@account":["src/views/account"],
+      "@account/*":["src/views/account/*"],
+      "@note":["src/views/note"],
+      "@note/*":["src/views/note/*"],
+      "@category":["src/views/category"],
+      "@category/*":["src/views/category/*"],
+      "@utils":["src/utils"], 
+      "@utils/*":["src/utils/*"],
+    },
     "baseUrl":".",
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,5 +39,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+
 }

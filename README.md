@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: Mfy
+ * @Date: 2021-03-01 16:08:58
+ * @LastEditors: Mfy
+ * @LastEditTime: 2021-03-01 18:28:27
+-->
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +76,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# 当前demo描述
+> 为了掌握react hooks的学习，特意更写此demo 该demo所有的实现方式均使用react-hook
