@@ -1,0 +1,26 @@
+.caleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 1.8;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 15px 14px; 
+  background: #fff;
+  border-bottom: 1px solid rgb(221,221 ,221);
+  .title {
+    font-size: 12px;
+  }
+
+  .desc {
+    font-size: 12px;
+    color: #666;
+  }
+  .rightContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

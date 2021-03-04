@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:59:53
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 09:53:25
+ * @LastEditTime: 2021-03-04 11:48:20
  */
 import React, { useState ,useEffect,useContext} from 'react';
 import CSS from './index.module.scss'
@@ -24,11 +24,7 @@ function TimeControl(props: TypeProps) {
   }
   function onCancel() {
     setCalendar(false)
-  } 
-
-  
-  
-
+  }  
   let CalendarDate = getDateTemp(currDate)
   console.log(CalendarDate)
   return <><div className={CSS.timeWrapper}>

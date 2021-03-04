@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 09:51:36
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 18:34:46
+ * @LastEditTime: 2021-03-04 09:05:38
  */
 import axios from '@service/fetchConfig'
 
@@ -31,5 +31,11 @@ export async function getCategoryDetail(params: {
   id:string
 }) {
   let resp = await axios.post('/category/getCategoryDetail',params);
+  return resp;
+}
+export async function deleteCategoryDetail(params: {
+  id:string
+}) {
+  let resp = await axios.post('/category/deleteCategory',params);
   return resp;
 }

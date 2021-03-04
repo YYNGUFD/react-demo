@@ -1,9 +1,12 @@
-.am-list-line{
-  .am-input-label{
+.am-list-line,.am-textarea-item {
+  .am-input-label,.am-textarea-label{
     font-size: 12px!important;
   }
+  textarea{
+    font-size: 14px!important;
+  }
   .am-input-control{
-    input{
+    input,textarea{
       font-size: 14px!important;
     }
   }

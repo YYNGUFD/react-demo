@@ -4,9 +4,9 @@
  * @Author: Mfy
  * @Date: 2021-03-02 08:56:52
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-02 18:49:31
+ * @LastEditTime: 2021-03-04 10:08:24
  */
-import React, { PureComponent, useState } from 'react';
+import React from 'react';
 import { InputItem, Card, Button, Toast } from 'antd-mobile';
 import CSS from './index.module.scss'  
 import { submitLogin } from '@account/api/index'

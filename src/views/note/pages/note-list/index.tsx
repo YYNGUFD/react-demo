@@ -4,15 +4,15 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:02:49
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 14:07:13
+ * @LastEditTime: 2021-03-04 19:21:54
  */
 import React, { useState, useEffect } from 'react';
 import { getNoteList } from '@note/api/index';
-import { Toast, Calendar } from 'antd-mobile';
+import { Toast, Calendar, Button } from 'antd-mobile';
 import { getNowDate } from '@utils/tool'
-import NoteItem from './widget/note-item/index'
-import TimeControl from './widget/time-control/index'
-import CSS from './index.module.scss'
+import NoteItem from '../widget/note-item/index'
+import TimeControl from '../widget/time-control/index'
+import CSS from './index.module.scss' 
 
 export const AppContext = React.createContext({});
 
@@ -42,7 +42,7 @@ function useList(initList?: any[]) {
 
 //使用useContext 
 
-function NoteList() {
+function NoteList(props?:{history:any}) {
   let { list, fetchList } = useList([]);
 
   //日历内容
@@ -67,12 +67,17 @@ function NoteList() {
     fetchDate()
     return () => {
     };
-  }, [date]);
+  }, [date]); 
 
+  function toAddNote(){
+    props.history.push('/note/add-note')
+  }
 
+  function toDetail(){
+    // props.history.push('/note/add')
+  }
 
-
-  return <AppContext.Provider value={{ currDate: date, setDate: setDate }}> 列表内容呀
+  return <AppContext.Provider value={{ currDate: date, setDate: setDate }}> 
     {/* 时间控制条 */}
     <TimeControl date={date} context={AppContext}></TimeControl>
     {/* 列表内容控制 */}
@@ -82,8 +87,11 @@ function NoteList() {
       })}
     </div>
     {/* 空白内容显示 */}
-    <div className={CSS.empty}>
-      {list.length == 0 && !isFetching && <div>暂无数据内容</div>}
+    {list.length == 0 && !isFetching && <div className={CSS.empty}>
+       <div>暂无数据内容</div>
+    </div>}
+    <div className={CSS.btnWrapper}>
+      <Button type="primary" className={CSS.btn} onClick={toAddNote}>添加计划</Button>
     </div>
   </AppContext.Provider>
 }

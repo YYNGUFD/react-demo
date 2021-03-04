@@ -4,11 +4,10 @@
  * @Author: Mfy
  * @Date: 2021-03-01 16:56:16
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 08:49:38
+ * @LastEditTime: 2021-03-04 20:02:18
  */
 import axios from 'axios'
-import qs from 'qs'
-import React, { PureComponent } from 'react';
+import qs from 'qs' 
 import { Toast } from 'antd-mobile';
 
 const myAxios = axios.create({

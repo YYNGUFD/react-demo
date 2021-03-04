@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 16:51:06
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-02 16:54:10
+ * @LastEditTime: 2021-03-04 10:42:26
  */
 Function.prototype.before = function (beforefn) {
   var _this = this;//保持函数原始引用；
@@ -25,3 +25,5 @@ Function.prototype.after = function (afterFn) {
 }
 
 export { }
+
+

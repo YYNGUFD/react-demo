@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-03 14:50:24
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 18:23:13
+ * @LastEditTime: 2021-03-04 09:22:29
  */
 import React, { useState } from 'react';
 import { Modal, Toast, Icon, InputItem ,Button} from 'antd-mobile';
@@ -26,7 +26,7 @@ const colorList = [
   ["#6495ED", "#00BFFF", "#87CEFA", "#B0C4DE", "#ADD8E6", "#4682B4", "#008B8B",],
 ]
 function AddCategory(props: TypeProps) {
-  let item = props.item || {value:'',color:null}
+  let item = props.item || { value: '', color: null } 
 
   let [categoryName, setName] = useState(item.value || "")
   let [color, setColor] = useState(item.color || colorList[0][0])

@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:33:18
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 09:05:48
+ * @LastEditTime: 2021-03-04 11:50:04
  */
 /*
  * @Descripttion: 
@@ -48,6 +48,16 @@ export const getDateTemp = function (date: string) {
   var str = date.replace(/-/g,'/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串 
   var nDate = new Date(str); // 构造一个日期型数据，值为传入的字符串
   return  nDate; 
+}
+ 
+/**
+ * 
+ * @param source 
+ */
+
+export const changeDate=function(val){
+ return  val.getFullYear() + "-"
+  + (val.getMonth() + 1) + "-" + val.getDate(); 
  }
 // 深拷贝
 export var deepCopy = function (source){ 

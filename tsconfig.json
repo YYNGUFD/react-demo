@@ -12,6 +12,8 @@
       "@service":["src/service"],
       "@service/*":["src/service/*"],
       "@views/*":["src/views/*"],
+      "@components":["src/components"],
+      "@components/*":["src/components/*"],
       "@account":["src/views/account"],
       "@account/*":["src/views/account/*"],
       "@note":["src/views/note"],
