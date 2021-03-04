@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-01 16:56:16
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 14:08:09
+ * @LastEditTime: 2021-03-04 08:49:38
  */
 import axios from 'axios'
 import qs from 'qs'
@@ -12,7 +12,7 @@ import React, { PureComponent } from 'react';
 import { Toast } from 'antd-mobile';
 
 const myAxios = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://10.2.26.26:3000' : ''
+  baseURL: process.env.NODE_ENV === 'development' ? '' : ''
 });
 
 
