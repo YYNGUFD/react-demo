@@ -4,12 +4,11 @@
  * @Author: Mfy
  * @Date: 2021-03-01 16:56:16
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 20:02:18
+ * @LastEditTime: 2021-03-05 15:42:03
  */
 import axios from 'axios'
 import qs from 'qs' 
-import { Toast } from 'antd-mobile';
-
+import { Toast } from 'antd-mobile'; 
 const myAxios = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? '' : ''
 });
@@ -35,11 +34,11 @@ myAxios.interceptors.request.use((config) => {
 //响应拦截器
 myAxios.interceptors.response.use(response => {
   let res = response.data;
-  const status = response.data.status
-  if (status === 401) {
-    Toast.fail(res.msg,1.5) 
+  const status = response.status 
+  if (status === 401) { 
+    Toast.fail(res.msg,1.5)  
   }
-  if (status == 9998) {
+  if (status === 9998) {
     var url = new Buffer(window.location.href).toString('base64')
     Toast.fail(res.msg,1.5)
     window.location.replace('/client/index.html/#/account/login?redirectUrl=' + url);

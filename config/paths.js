@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0.0
+ * @Author: Mfy
+ * @Date: 2021-03-01 16:36:11
+ * @LastEditors: Mfy
+ * @LastEditTime: 2021-03-05 10:53:06
+ */
 'use strict';
 
 const path = require('path');
@@ -24,14 +32,14 @@ const publicUrlOrPath = getPublicUrlOrPath(
 const buildPath = process.env.BUILD_PATH || 'build';
 
 const moduleFileExtensions = [
+  'tsx',
   'web.mjs',
   'mjs',
   'web.js',
   'js',
   'web.ts',
   'ts',
-  'web.tsx',
-  'tsx',
+  'web.tsx', 
   'json',
   'web.jsx',
   'jsx',

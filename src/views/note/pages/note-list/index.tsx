@@ -4,11 +4,11 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:02:49
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 19:21:54
+ * @LastEditTime: 2021-03-05 13:53:59
  */
 import React, { useState, useEffect } from 'react';
 import { getNoteList } from '@note/api/index';
-import { Toast, Calendar, Button } from 'antd-mobile';
+import { Toast, Button } from 'antd-mobile';
 import { getNowDate } from '@utils/tool'
 import NoteItem from '../widget/note-item/index'
 import TimeControl from '../widget/time-control/index'
@@ -73,9 +73,7 @@ function NoteList(props?:{history:any}) {
     props.history.push('/note/add-note')
   }
 
-  function toDetail(){
-    // props.history.push('/note/add')
-  }
+
 
   return <AppContext.Provider value={{ currDate: date, setDate: setDate }}> 
     {/* 时间控制条 */}
@@ -83,7 +81,7 @@ function NoteList(props?:{history:any}) {
     {/* 列表内容控制 */}
     <div className={CSS.listWrapper}>
       {list.length > 0 && list.map((item, index) => {
-        return (<NoteItem item={item} key={index}></NoteItem>)
+        return (<NoteItem item={item} key={index} ></NoteItem>)
       })}
     </div>
     {/* 空白内容显示 */}

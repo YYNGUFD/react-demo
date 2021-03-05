@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:33:18
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 11:50:04
+ * @LastEditTime: 2021-03-05 15:36:57
  */
 /*
  * @Descripttion: 
@@ -25,7 +25,7 @@ export var changeWorld= function(str){
  * @param {*} obj 
  */
 export var objPush = function(targetObj,pushObj){
-	if(typeof targetObj =='object'){
+	if(typeof targetObj ==='object'){
 		for(var key in pushObj){
 			targetObj[key] = pushObj[key]
 		}
@@ -34,8 +34,8 @@ export var objPush = function(targetObj,pushObj){
 /**
  * 获取当前时间
  */
-export var getNowDate = function(){
-	 var date = new Date();
+export var getNowDate = function(str?){
+	 var date =str ?  new Date(str) : new Date();
 	 return date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate();
 }
 
@@ -44,7 +44,8 @@ export var getNowDate = function(){
  * @param source 
  */
 
-export const getDateTemp = function (date: string) { 
+export const getDateTemp = function (date: string) {
+  if (!date) return new Date(str); 
   var str = date.replace(/-/g,'/'); // 将-替换成/，因为下面这个构造函数只支持/分隔的日期字符串 
   var nDate = new Date(str); // 构造一个日期型数据，值为传入的字符串
   return  nDate; 
@@ -54,11 +55,13 @@ export const getDateTemp = function (date: string) {
  * 
  * @param source 
  */
-
-export const changeDate=function(val){
+export const changeDate = function (val) {
+  if (!(val instanceof Date)) return val; 
  return  val.getFullYear() + "-"
   + (val.getMonth() + 1) + "-" + val.getDate(); 
- }
+}
+ 
+
 // 深拷贝
 export var deepCopy = function (source){ 
   let tatget =Array.isArray(source) ?[]: {};
@@ -66,7 +69,7 @@ export var deepCopy = function (source){
     //包含可迭代属性
     if(source.hasOwnProperty(key)){
        //判断是否是对象 是对象要进行进一步引用操作
-      if(typeof  tatget[key] =='object' && source!=null){
+      if(typeof  tatget[key] ==='object' && source!=null){
         tatget[key]= deepCopy(tatget[key])
       }else{
         tatget[key] = source[key]

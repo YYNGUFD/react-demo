@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 08:56:52
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 10:08:24
+ * @LastEditTime: 2021-03-05 11:35:05
  */
 import React from 'react';
 import { InputItem, Card, Button, Toast } from 'antd-mobile';
@@ -35,7 +35,7 @@ function Login(props:TypeProps) {
   async function submit() {
     if (!checkForm()) return;
     let res:TypeResponse = await submitLogin({ username: username, password: password });
-    if (res.status == 0) {
+    if (res.status === 0) {
       localStorage.setItem('token', res.data.token) 
       //跳转到首页
       if (redirectUrl) {

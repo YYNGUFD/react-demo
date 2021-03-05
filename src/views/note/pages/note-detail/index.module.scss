@@ -1,0 +1,32 @@
+.noteDetail{
+  padding-top: 70px;
+  .icon{
+    right: 30%;
+    transform: translateX(50%);
+    top: 5px;
+    position: absolute;
+    font-size: 90px;
+    z-index: 60;
+    opacity: 0.5;
+  }
+  .btnWrapper{
+    display: flex;
+    padding: 0 10px;
+    margin-top: 10px;
+    .btn{
+      flex: 1;
+      height: 30px;
+      line-height: 30px;
+      font-size:14px;
+      border-radius: 30px;
+  
+      &::before{
+        border-radius: 60px;
+      }
+      &:nth-child(n+2){
+        margin-left: 5px;
+      }
+    }
+  }
+
+} 

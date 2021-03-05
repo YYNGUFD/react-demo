@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {TypetagProps} from './index.d'
 import CSS from './index.module.scss'
 function Tag(props:TypetagProps){

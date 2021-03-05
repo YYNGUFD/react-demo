@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-04 14:35:56
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 14:42:23
+ * @LastEditTime: 2021-03-05 11:36:34
  */
 import React, { useState } from 'react';
 import { getCategoryList } from '@category/api/index'
@@ -16,7 +16,7 @@ export function useCateList() {
     console.log("请求接口了-----")
     setFetch(true)
     let res:any = await getCategoryList();
-    if (res.status == 0) {
+    if (res.status === 0) {
       setList(res.data.list)
       cb && cb(true)
     } else {

@@ -11,3 +11,14 @@
     }
   }
 }
+.am-list-item {
+  .am-list-content{
+    font-size: 12px!important;
+    color: #999!important;
+  }
+  .am-list-extra{
+    font-size: 14px!important;
+    color: #333!important;
+    flex:1;
+  }
+}

@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-01 16:40:39
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-03 14:43:43
+ * @LastEditTime: 2021-03-05 10:47:17
  */
 import React from 'react'
 import Loadable from 'react-loadable' 
@@ -24,8 +24,9 @@ function RouterMap() {
     return (
       <Router>
         <Switch> 
-          {RouterList.map(route => {  
-            var Component:any = Loadable({
+          {RouterList.map(route => { 
+           
+            var Component:any = Loadable({ 
                 loader:route.component,
                 loading: () => (<div>页面加载中.....</div>)
             })  

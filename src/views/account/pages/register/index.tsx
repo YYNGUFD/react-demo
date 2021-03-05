@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 08:56:52
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-02 17:13:19
+ * @LastEditTime: 2021-03-05 11:35:24
  */
 import React, { useState } from 'react';
 import { InputItem, Card, Button, Toast } from 'antd-mobile';
@@ -38,14 +38,14 @@ function Register(props: TypeProps) {
   async function submit() {
     if(!checkForm()) return  
     let res:TypeResponse = await submitRegister({ username: username, password: password });
-    if (res.status == 0) {
+    if (res.status === 0) {
       Toast.success(res.msg, 2);
       toLogin(1);
     }
   }
 
   function toLogin(type?: number) {
-    if (type == 1) {
+    if (type === 1) {
       props.history.replace('/account/login');
       return false;
     }
