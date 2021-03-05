@@ -1,0 +1,60 @@
+.addNote{
+
+  .categoryList{
+    background: #fff;
+    padding:10px 15px;
+    border: 1px solid #efefef;
+    .title{
+      font-size: 12px;
+    }
+  
+    .cateLists{
+      display: flex;
+      justify-content: space-between;
+      max-height: 100px;
+      overflow-y: scroll; 
+      flex-wrap: wrap;
+      overflow-x: hidden;
+      padding: 20px 0px;
+   
+      .item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        flex: 0 0 30%; 
+        height: 23px;
+        font-size: 12px;
+        margin-top: 5px;
+        color: #fff;
+        box-sizing: border-box;
+        position: relative;
+        .selectType {
+          position: absolute;
+          color: green;
+          z-index: 0;
+          width:27px;
+          right: -5px;
+          box-sizing: border-box;
+          overflow: hidden;
+        }
+      }
+      &::after{
+        flex:0 0  auto;
+        content: "";
+
+      }
+      .addType{ 
+          background: #fd341e;
+      }
+
+    }
+    
+  }
+  .btn{
+    margin: 15px;
+    border-radius: 30px;
+    height: 36px;
+    line-height: 36px;
+  }
+}

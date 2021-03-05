@@ -4,9 +4,9 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:06:18
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 15:35:20
+ * @LastEditTime: 2021-03-05 16:11:41
  */
-import React, { useState, useRef, useEffect ,useCallback,useMemo} from 'react';
+import React, { useState, useRef, useEffect, useReducer, useCallback } from 'react';
 import { InputItem, TextareaItem, Button, Toast } from 'antd-mobile'
 import CSS from './index.module.scss'
 import CalenderSelect from './widget/calender-select/index'
@@ -19,54 +19,73 @@ import { useNoteDetail } from '@note/@use-methods/index'
 interface TypePorps {
   history?: any,
 }
+
+// 使用react reducer 进行操作
+const initState = {
+  title: '',//计划标题
+  beginTime: '',//开始时间
+  endTime: '', //结束时间
+  categoryId: '', //选择分类id
+  desc: '', //文本value的值
+}
+function enhanceReducer(state, action) {
+  //进行更新
+  console.log(action)
+  let targetValue = action.target;
+  return { ...state, ...targetValue }
+}
 function AddNote(props: TypePorps) {
-  let [titleName,setTitleName] = useState("");
-  let { cateList, isFetch, fetchCateList, } = useCateList()
-  let [beginTime, setBeginTime] = useState(null);
-  let [endTime, setEndTime] = useState(null);
-  let [categoryId, setSelectId] = useState();
-  let [textValue, setTextValue] = useState("");
+  const [state, dispatch] = useReducer(enhanceReducer, initState);
   let id = getUrlParams('id');
+  let { cateList, fetchCateList } = useCateList();
+
+  //日历组件获取
   let beginRef = useRef(null)
   let endRef = useRef(null)
-  //编辑时需要操作
-  let {item,fetchItem} = useNoteDetail() 
 
-  //综合在一起
-  let [form,setForm] = useState({})
- 
+  const updateForm = useCallback((target) => {
+    dispatch({ target: target })
+  }, [])
+
+  //编辑时需要操作
+  let { item, fetchItem } = useNoteDetail()
+
   useEffect(() => {
     fetchCateList();
-    if(id){
-      fetchItem({id:id});
+    if (id) {
+      fetchItem({ id: id });
     }
     return () => {
     };
-  }, []); 
+  }, []);
 
   //编辑时候
   useEffect(() => {
     //item 修改的时候触发器这里
-    if(item){
-       setTitleName(item.title)
-       setBeginTime(item.beginTime); 
-       setEndTime(item.endTime)
-       setSelectId(item.categoryId._id)
-       setTextValue(item.desc) 
-    } 
-  }, [item]);  
+    if (item) {
+      updateForm({
+        title: item.title,
+        beginTime: item.beginTime,//开始时间
+        endTime: item.endTime, //结束时间
+        categoryId: item.categoryId._id, //选择分类id
+        desc: item.desc, //文本value的值
+      })
+    }
+  }, [item]);
 
   function toAddCate() {
     props.history.push('/category/cate-list')
   }
-  function checkValue() {  
-    if (!titleName || !beginRef.current.getTime() || !beginRef.current.getTime() || !categoryId) {
-      Toast.fail("请将计划内容填写完整")
-      return false
-    } 
+  function checkValue() {
+    for (var key in state) {
+      if (key != 'desc' && !state[key]) {
+        Toast.fail("请将表单内容填写完整");
+        return false;
+      }
+    }
     //比较时间差距
-    var current = new Date(beginRef.current.getTime().replace(/\-/g, "/"));
-    var date = new Date(beginRef.current.getTime().replace(/\-/g, "/"));
+    var current = new Date(state.beginTime.replace(/\-/g, "/"));
+    var date = new Date(state.endTime.replace(/\-/g, "/"));
     if (date < current) {
       Toast.fail("开始时间应小于结束时间")
       return false
@@ -74,35 +93,32 @@ function AddNote(props: TypePorps) {
     return true;
   }
   async function submit() {
+    //数据获取
+    updateForm({
+      beginTime: beginRef.current.getTime(),
+      endTime: endRef.current.getTime(),
+    });
     if (checkValue()) {
-      let params = {
-        title: titleName,
-        desc: textValue,
-        categoryId: categoryId,
-        beginTime: beginTime,
-        endTime: endTime,
-        id: id
-      }
-      let res:any = await addNote(params);
-      if(res.status == 0){
-         Toast.success(res.msg)
-         props.history.push("/note/note-list")
+      let params = state;
+      let res: any = await addNote(params);
+      if (res.status == 0) {
+        Toast.success(res.msg)
+        props.history.push("/note/note-list")
       }
     }
-  }  
+  }
 
-  //@todo 测试useMemo
- console.log("父组件重新render")
+  //@todo 测试useMemo 
   return <div className={CSS.addNote}>
     {/* 计划名称 */}
-    <InputItem type="text"  value={titleName}  onChange={(value) => {setTitleName(value)}} placeholder="请输入计划名称" labelNumber={4}>计划名称</InputItem>
+    <InputItem type="text" value={state.title} onChange={(value) => { updateForm({ title: value }) }} placeholder="请输入计划名称" labelNumber={4}>计划名称</InputItem>
     {/* 类别 */}
     <div className={CSS.categoryList}>
       <p className="title">选择类别</p>
       <div className={CSS.cateLists}>
         {cateList.length > 0 && cateList.map((item, index) => {
-          return <div className={CSS.item} key={index} style={{ background: item.color }} onClick={()=>{setSelectId(item._id)}}>{item.value}
-            {categoryId == item._id && <i className={"iconfont icon-yixuanze " + CSS.selectType}
+          return <div className={CSS.item} key={index} style={{ background: item.color }} onClick={() => { updateForm({ categoryId: item._id }) }}>{item.value}
+            {state.categoryId == item._id && <i className={"iconfont icon-yixuanze " + CSS.selectType}
             ></i>}
           </div>
         })}
@@ -112,20 +128,21 @@ function AddNote(props: TypePorps) {
       </div>
     </div>
     
+
     {/* 开始时间 */}
-    <CalenderSelect title="计划开始时间" ref={beginRef} time={beginTime}></CalenderSelect>
+    <CalenderSelect title="计划开始时间" ref={beginRef} time={state.beginTime}></CalenderSelect>
     {/* 结束时间 */}
-    <CalenderSelect title="计划结束时间" ref ={endRef} time={endTime}></CalenderSelect>
+    <CalenderSelect title="计划结束时间" ref={endRef} time={state.endTime}></CalenderSelect>
 
     {/* 备注 */}
     <TextareaItem
-      value={textValue}
+      value={state.desc}
       title="备注"
       rows={2}
-      onChange={(val) => { setTextValue(val) }}
+      onChange={(val) => { updateForm({ textValue: val }) }}
       placeholder="请输入备注信息"
     />
-    <Button type="primary" className={CSS.btn} onClick={submit}>{id?"确认修改":"添加"}</Button>
+    <Button type="primary" className={CSS.btn} onClick={submit}>{id ? "确认修改" : "添加"}</Button>
   </div>
 }
 export default AddNote;
