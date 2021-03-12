@@ -4,13 +4,13 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:06:18
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 15:35:20
+ * @LastEditTime: 2021-03-09 16:34:26
  */
 import React, { useState, useRef, useEffect ,useCallback,useMemo} from 'react';
 import { InputItem, TextareaItem, Button, Toast } from 'antd-mobile'
 import CSS from './index.module.scss'
 import CalenderSelect from './widget/calender-select/index'
-import { useCateList } from '@category/pages/@use-method'
+import { useCateList } from '@category/@use-method'
 import { getUrlParams } from '@utils/common'
 import { addNote } from '@note/api/index'
 import { useNoteDetail } from '@note/@use-methods/index'

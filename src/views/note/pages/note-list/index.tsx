@@ -1,96 +1,188 @@
-/*
- * @Descripttion: 
- * @version: 1.0.0
- * @Author: Mfy
- * @Date: 2021-03-02 18:02:49
- * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 13:53:59
- */
-import React, { useState, useEffect } from 'react';
-import { getNoteList } from '@note/api/index';
-import { Toast, Button } from 'antd-mobile';
-import { getNowDate } from '@utils/tool'
+import React, { PureComponent,useState,useReducer,useEffect,useRef } from 'react';
+import { Tabs, WhiteSpace, Badge ,Icon} from 'antd-mobile';
+import { getNoteListStatus ,getInitPanel} from "@note/api/index";
 import NoteItem from '../widget/note-item/index'
-import TimeControl from '../widget/time-control/index'
-import CSS from './index.module.scss' 
+import CSS from './index.module.scss'
+import { statusMap} from '@note/pages/mixins/index'
+import TimePanel from './widget/panel/index'
+let  tabList = [];
+for (var key in statusMap) {
+  tabList.push({
+    sub: parseInt(key),
+    title: statusMap[key]["value"],
+  });
+}
+tabList.unshift({ sub: 9, title: "全部" });
 
-export const AppContext = React.createContext({});
 
-/**
- * 列表数据请求
- * @param initList 
- */
-function useList(initList?: any[]) {
-  let [list, setList] = useState(initList);
-  async function fetchList(params: { date: string }, cb?: Function) {
-    Toast.loading("", 20, () => { }, true)
-    let res = await getNoteList(params);
-    if (res.status == 0) {
-      setList(res.data.list)
-      cb && cb(true)
-    } else {
-      cb && cb(false)
-    }
-    Toast.hide()
-  }
-  return {
-    list,
-    setList,
-    fetchList,
-  }
+const initState = {
+  noteList:[], 
+  page:1,
+  loadCom:false,
+  total:10
 }
 
-//使用useContext 
+//创建action
+const REQUEST_NOTELIST = "REQUEST_NOTELIST";
+const RECEIVE_NOTELIST = "RECEIVE_NOTELIST";
+//开始请求
+const requestGoodsList = () =>({
+  type: REQUEST_NOTELIST
+});
 
-function NoteList(props?:{history:any}) {
-  let { list, fetchList } = useList([]);
+//接收到数据
+const receiveGoodsList = res=> ({
+  type: RECEIVE_NOTELIST,
+  res:res
+});
+const addPage = ()=>({
+  type:'ADD_PAGE', 
+})
 
-  //日历内容
-  let [date, setDate] = useState(getNowDate())
-  let [isFetching, setFetching] = useState(false);
-  function fetchDate() {
-    setFetching(true)
-    fetchList({ date: date }, () => {
-      setFetching(false)
-    });
+const fetchNoteList =async (params, dispatch,type) =>{
+  type &&  dispatch(requestGoodsList()); 
+  let res =  await getNoteListStatus(params);
+  dispatch(receiveGoodsList(res))
+};
+
+
+function enReducer(state,action){
+  //获取数据
+  switch(action.type){
+    case 'REQUEST_NOTELIST':{
+      console.log("执行")
+        return { noteList:[], page:1, loadCom:false}; 
+    }
+    case 'ADD_PAGE':{
+      let newState = {...state};
+      ++ newState.page; 
+      console.log("ADD_PAGE");
+      return newState
+    }
+    case 'RECEIVE_NOTELIST':{
+      let res =  action.res;
+      let newState = {...state} 
+      if(res.status == 0 ){
+        newState.total = res.data.total; 
+        if(state.page ==1){
+           newState.noteList = res.data.list;
+        }else{
+          newState.noteList.concat(res.data.list)
+        }
+        if(state.page ==1 && res.data.list.length ==0){
+          newState.isEmpty = true;
+        }
+        if( newState.noteList.length  ==res.data.total ){
+          newState.loadCom = true;
+        } 
+      }else{
+
+      } 
+      return newState;    
+    } 
+  } 
+}
+
+function usePancel(){
+  let [panObj,setPanObj] = useState({categoryList:[],timeList:[]})
+  async function fetchPancel(cb?){
+    let res = await getInitPanel();
+    if(res.status == 0){
+      setPanObj(res.data)
+      setTimeout(()=>{
+        cb && cb(true)
+      })
+    }else{
+      cb && cb(false)
+    }
   }
-  //首次进入 获取接口数据
+  return {panObj,fetchPancel};
+}
+
+function NoteList(){
+  let [activeTab,setActiveTab] = useState(9);
+  let [initdata,dispatch] = useReducer(enReducer,initState);
+  let [isLoad,setLoad] = useState(false)
+  let ref = useRef()
+  let {panObj,fetchPancel} = usePancel();
+  let [showPanel,setPanel] = useState(false);
+  let [selectMsg,setSelectMsg] =useState({time:"",categoryId:""}) 
+
+  function confirmSelect(params){
+    setPanel(false);
+    setSelectMsg(params)
+    //存储当前时间
+    fetchNoteList({page:1,status:activeTab,...params},dispatch,true)
+  }
+
+ 
   useEffect(() => {
-    fetchDate()
-    return () => {
-    };
+  //获取pancel
+   fetchPancel()
+   //获取数据 用于获取内容
+   fetchNoteList({page:1,status:activeTab},dispatch,true)
+   //绑定页面进行scroll监听
+   window.addEventListener('scroll',handler,false)
+   
+   return ()=>{
+    window.removeEventListener('scroll',()=>{
+
+    },false)
+   }
+
   }, []);
-
-  //时间变化时候进行重新获取接口
+  
+  //page 发生了更改了===
   useEffect(() => {
-    console.log("日期变化了---")
-    fetchDate()
-    return () => {
-    };
-  }, [date]); 
+    if(initdata.page>1 && !isLoad){
+      fetchNoteList({page:initdata.page,status:activeTab,...selectMsg},dispatch,false)
+    } 
+  }, [initdata.page,isLoad]);
+ 
+  //数据请求回来了---
+  useEffect(() => {
+    initdata.noteList.length>0 && setLoad(false)
+  }, [initdata.noteList]);
 
-  function toAddNote(){
-    props.history.push('/note/add-note')
-  }
 
+  function handler(){
+    let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+  
+    // 滑动翻页
+    if(!initdata.isEmpty && !initdata.loadCom && scrollHeight > clientHeight && scrollTop + clientHeight >= scrollHeight - 20) {
+       dispatch(addPage());
+       setLoad(true)
+    }
+  } 
 
-
-  return <AppContext.Provider value={{ currDate: date, setDate: setDate }}> 
-    {/* 时间控制条 */}
-    <TimeControl date={date} context={AppContext}></TimeControl>
-    {/* 列表内容控制 */}
-    <div className={CSS.listWrapper}>
-      {list.length > 0 && list.map((item, index) => {
+  function onTabClick(tab,index){
+   if(tab.sub != activeTab){
+    setActiveTab(tab.sub)
+    fetchNoteList({page:1,status:activeTab,...selectMsg},dispatch,true);
+   } 
+  } 
+  let { noteList,isEmpty} = initdata;
+  return (<div className={CSS.noteWrapper}>
+  <div className={CSS.fixTab}> 
+   <Tabs tabs={tabList} 
+      initialPage={0} 
+      renderTab={tab => <span>{tab.title}</span>}
+      onTabClick={onTabClick}
+    >  
+    </Tabs>
+    <Icon type="ellipsis" color={selectMsg.time ? "red":'#666'} className={CSS.icon} onClick={()=>{setPanel(true)}}></Icon>
+    </div>
+    {/* 内容区域 */}
+    
+    {!isEmpty && <div className={CSS.noteWrapper} ref={ref}> 
+     {noteList.length > 0 && noteList.map((item, index) => {
         return (<NoteItem item={item} key={index} ></NoteItem>)
       })}
-    </div>
-    {/* 空白内容显示 */}
-    {list.length == 0 && !isFetching && <div className={CSS.empty}>
-       <div>暂无数据内容</div>
     </div>}
-    <div className={CSS.btnWrapper}>
-      <Button type="primary" className={CSS.btn} onClick={toAddNote}>添加计划</Button>
-    </div>
-  </AppContext.Provider>
+    {isEmpty && <div className={CSS.empty}>暂无数据 </div>}
+   { showPanel && <TimePanel selectMsg = {selectMsg} timeList={panObj.timeList} confirmSelect={confirmSelect} categoryList={panObj.categoryList}></TimePanel>}
+  </div>)
 }
 export default NoteList;

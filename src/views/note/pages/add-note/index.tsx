@@ -4,13 +4,13 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:06:18
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 16:11:41
+ * @LastEditTime: 2021-03-08 08:54:07
  */
 import React, { useState, useRef, useEffect, useReducer, useCallback } from 'react';
 import { InputItem, TextareaItem, Button, Toast } from 'antd-mobile'
 import CSS from './index.module.scss'
 import CalenderSelect from './widget/calender-select/index'
-import { useCateList } from '@category/pages/@use-method'
+import { useCateList } from '@views/category/@use-method'
 import { getUrlParams } from '@utils/common'
 import { addNote } from '@note/api/index'
 import { useNoteDetail } from '@note/@use-methods/index'
@@ -127,7 +127,7 @@ function AddNote(props: TypePorps) {
         </div>
       </div>
     </div>
-    
+
 
     {/* 开始时间 */}
     <CalenderSelect title="计划开始时间" ref={beginRef} time={state.beginTime}></CalenderSelect>

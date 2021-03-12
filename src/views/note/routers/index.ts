@@ -4,12 +4,12 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:11:13
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 10:53:56
+ * @LastEditTime: 2021-03-12 14:49:41
  */
 const nodeListRoutes = [
   {
-    path: '/note/note-list',
-    component: () => import( /* webpackChunkName: "note" */ '../pages/note-list/index') ,
+    path: '/note/note-index',
+    component: () => import( /* webpackChunkName: "note" */ '../pages/note-index/index') ,
     meta:{
         title:'笔记首页'
     },
@@ -26,6 +26,13 @@ const nodeListRoutes = [
     component: () => import( /* webpackChunkName: "note" */ '../pages/note-detail/index') ,
     meta:{
         title:'笔记详情'
+    },
+  },
+  {
+    path: '/note/note-list',
+    component: () => import( /* webpackChunkName: "note" */ '../pages/note-list/index') ,
+    meta:{
+        title:'笔记列表'
     },
   },
 ]

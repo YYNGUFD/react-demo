@@ -1,0 +1,79 @@
+.pancelModal{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  z-index: 099999;
+  background: rgba($color: #000000, $alpha: 0.5);
+  .modalSelect{
+    padding: 10px;
+    box-sizing: border-box;
+    width: 75%;
+    position: absolute;
+    right: 0px;
+    background: #fff;
+    height: 100%;
+    .title{
+      font-weight: 700;
+      padding: 10px 0px;
+    }
+    .itemWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      & > div {
+        margin-top: 10px;
+        flex: 0 0 30%;
+        height: 20px;
+        box-sizing: border-box;
+        border: 1px solid rgb(221, 220, 220);
+        border-radius: 30px;
+        text-align: center;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+       
+      }
+      .select{
+        color: red;
+        border-color: red;
+     }
+      //最后一项目 进行左对齐
+      &:after {
+        content: "";
+        width: 30%;
+      }
+    }
+    .btnWrapper {
+      position: absolute;
+      bottom: 50px;
+      display: flex;
+      width: 90%;
+      margin-right: 15px;
+      span {
+        display: flex;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 14px;
+        &.clear {
+          flex: 0 0 60px;
+          background-image: linear-gradient(270deg, #ffa108 0%, #ffc600 100%);
+          border-radius: 100px 0 0 100px;
+        }
+        &.confirm {
+          flex: 1;
+          background-image: linear-gradient(270deg, #ff3636 0%, #ff3261 100%);
+          border-radius: 0 100px 100px 0;
+        }
+      }
+    
+    }
+  }
+
+}

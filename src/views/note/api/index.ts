@@ -4,7 +4,7 @@
  * @Author: Mfy
  * @Date: 2021-03-02 18:03:58
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-05 09:27:45
+ * @LastEditTime: 2021-03-12 17:53:45
  */
 import axios from '@service/fetchConfig'
 import api from './api'
@@ -63,7 +63,7 @@ export const deleteNote = async function(params) {
  * 筛选计划
  */
 
- export const getNoteListStatus = async function(params){
+ export const getNoteListStatus = async function(params?){
   const resp = await axios.post(api.getNoteListStatus, params);
   return resp;
  }
@@ -71,7 +71,7 @@ export const deleteNote = async function(params) {
  /**
   * 获取初始化筛选列表
   */
- export const  getInitPanel = async function(params){
+ export const  getInitPanel = async function(params?){
   const resp = await axios.post(api.getInitPanel, params);
   return resp;
  }

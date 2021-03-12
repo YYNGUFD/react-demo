@@ -4,14 +4,14 @@
  * @Author: Mfy
  * @Date: 2021-03-03 14:19:14
  * @LastEditors: Mfy
- * @LastEditTime: 2021-03-04 14:42:53
+ * @LastEditTime: 2021-03-05 19:03:25
  */
 import React, { useState ,useEffect} from 'react';
 import AddCategory from '../widget/add-category/index'
 import CategoItem from './widget/category-item/index'
 import CSS from './index.module.scss'
 import { Button } from 'antd-mobile';
-import {useCateList } from '@category/pages/@use-method'
+import {useCateList } from '@views/category/@use-method'
 
 function CategoryList(props?: any) {
 
