@@ -172,7 +172,7 @@ function NoteList(){
       onTabClick={onTabClick}
     >  
     </Tabs>
-    <Icon type="ellipsis" color={selectMsg.time ? "red":'#666'} className={CSS.icon} onClick={()=>{setPanel(true)}}></Icon>
+    <Icon type="ellipsis" color={(selectMsg.time|| selectMsg.categoryId) ? "red":'#666'} className={CSS.icon} onClick={()=>{setPanel(true)}}></Icon>
     </div>
     {/* 内容区域 */}
     
